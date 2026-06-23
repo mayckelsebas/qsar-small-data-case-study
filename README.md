@@ -1,105 +1,96 @@
-# QSAR Small-Data Benchmark
+# QSAR Small-Data Case Study
 
 ## Overview
 
-This repository contains the fully reproducible computational framework supporting the study:
+This repository contains the reproducible computational workflow supporting the study:
 
-**"Descriptor Selection vs Algorithmic Complexity in Small-Data QSAR: A Benchmark Study (n = 19)"**
+**"Descriptor Dimensionality Versus Algorithmic Complexity in a Small-Data QSAR Case Study"**
 
-The objective of this work is to evaluate whether modern machine learning (ML) algorithms outperform a parsimonious classical QSAR model under strict small-data conditions.
+The study evaluates whether increasing descriptor dimensionality and algorithmic complexity improve predictive performance under severe small-data conditions (n = 19). A previously published three-descriptor multiple linear regression (MLR) model is re-evaluated alongside several machine learning approaches, including Ridge Regression, Lasso Regression, Support Vector Regression (RBF kernel), Random Forest, K-Nearest Neighbours, and XGBoost.
 
-The dataset consists of 19 L-mannitol derivatives evaluated against Plasmepsin II (Log Ki as dependent variable).
-
----
-
-## Scientific Rationale
-
-In small datasets (n ≈ 10–30), model stability is often more influenced by dimensionality control than by algorithmic complexity.  
-
-This study benchmarks:
-
-- A classical Multiple Linear Regression (MLR) model (3 selected descriptors)
-- Several ML algorithms
-- Full descriptor set vs reduced descriptor set
-
-All models are evaluated using identical Leave-One-Out Cross-Validation (LOOCV) protocols to ensure methodological fairness.
+The repository provides all files required to reproduce the reported results, figures, validation metrics, statistical tests, and Y-randomization analyses.
 
 ---
 
-## Dataset
+## Repository Contents
 
-File: `dataset_standard.csv`
-
-- 19 compounds
-- 29 structural descriptors
-- No quantum descriptors
-- Dependent variable: `Log Ki`
-- Standard international CSV formatting (comma separator, decimal point)
+* `dataset_standard.csv` — Curated dataset containing 19 compounds and 29 molecular descriptors.
+* `qsar_case_study.py` — Publication-version analysis script.
+* `requirements.txt` — Python package requirements.
+* `LICENSE` — Repository license.
 
 ---
 
-## Models Evaluated
+## Computational Environment
 
-### Classical Model
-- Linear Regression
-- 3 selected descriptors: Mi, nCs, nHDon
+The reproducibility audit was successfully validated using:
 
-### Machine Learning Models
-- Ridge
-- Lasso
-- SVR (RBF)
-- Random Forest
-- KNN
-- XGBoost
+* Python 3.10
+* scikit-learn 1.7.2
+* XGBoost 3.2.0
 
-Two dimensionality scenarios were tested:
-1. Reduced descriptor set (3 descriptors)
-2. Full descriptor set (29 descriptors)
+Additional dependencies include NumPy, pandas, SciPy, Matplotlib, and OpenPyXL.
 
 ---
 
-## Validation Protocol
+## Installation
 
-- Leave-One-Out Cross-Validation (LOOCV)
-- R²_LOOCV
-- MAE
-- RMSE
-- Q²_F1
-- Q²_F2
-- Golbraikh–Tropsha parameters (k and R²₀)
-- Y-randomization test
-- Paired t-test
-- Wilcoxon signed-rank test
-- Bootstrap 95% confidence intervals
+Create and activate a Python environment, then install dependencies:
 
-Random seed fixed to ensure reproducibility.
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Key Findings
+## Running the Analysis
 
-- The classical 3-descriptor model achieved:
+Execute:
 
-  R²_LOOCV = 0.7324  
-  MAE = 0.3706  
-  RMSE = 0.4787  
+```bash
+python qsar_case_study.py
+```
 
-- The best ML full-descriptor model (XGBoost) achieved:
+---
 
-  R²_LOOCV = 0.6677  
-  MAE = 0.3912  
-  RMSE = 0.5334  
+## Expected Outputs
 
-- Differences were not statistically significant.
-- Descriptor dimensionality exerted greater influence on stability than algorithmic complexity.
+The script automatically creates:
+
+### figures/
+
+* figure1_mlr_observed_vs_predicted.png
+* figure2_mlr_residuals.png
+* figure3_williams_plot.png
+* figure4_xgboost_observed_vs_predicted.png
+* model_comparison.png
+* y_randomization.png
+
+### results/
+
+* model_results.csv
+* svr_sensitivity.csv
 
 ---
 
 ## Reproducibility
 
-To reproduce the results:
+The repository reproduces:
 
-### 1️⃣ Install dependencies
+* LOOCV validation metrics
+* Golbraikh–Tropsha external validation statistics
+* Y-randomization analysis
+* Statistical comparison tests
+* Hyperparameter sensitivity analysis
 
-```bash
-pip install -r requirements.txt
+---
+
+## Citation
+
+If you use this repository, please cite the associated publication.
+
+---
+
+## License
+
+MIT License.

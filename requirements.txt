@@ -1,6 +1,7 @@
-numpy
-pandas
-scikit-learn
-scipy
-matplotlib
-xgboost
+numpy>=2.2.6
+pandas>=2.3.3
+scipy>=1.15
+matplotlib>=3.10
+scikit-learn==1.7.2
+xgboost==3.2.0
+openpyxl>=3.1
